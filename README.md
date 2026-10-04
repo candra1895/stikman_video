@@ -1,53 +1,75 @@
 # Stickman vs Website
 
-Prototype video vertikal 9:16 untuk serial **Stickman vs Website**, dibuat dengan HyperFrames + GSAP.
+Video vertikal HyperFrames 1080x1920 / 60 FPS dengan karakter stickman tebal dan rig pose-driven reusable.
 
-## Target
-- Resolusi: 1080x1920
-- Frame rate final: 60 FPS
-- Format: vertical short-form
-- Karakter: stickman SVG dengan joint/pivot GSAP
-- Konsep: stickman masuk ke halaman website dan mulai menghancurkan elemen UI secara fisik
-- Style: clean web UI + slapstick animation
+## Yang sudah tersedia
 
-## Preview
+- Scene 01: website normal, stickman masuk, berjalan, berpikir, lalu menendang CTA.
+- Stickman_Set modular:
+  - 00_Rig
+  - 01_Locomotion
+  - 02_Vertical
+  - 03_Interaction
+  - 04_Combat
+  - 05_Emotion
+  - 06_Sport_Special
+  - Export
+- Walk cycle 8 pose dengan interpolasi 60 FPS.
+- Rig tebal berbasis titik sendi, bukan garis tipis.
+- Render shortcut Windows 60 FPS.
 
-```bash
-npx hyperframes preview
+## Sinkronkan versi terbaru ke PC
+
+```bat
+cd /d D:\stikman_video
+git fetch origin
+git reset --hard origin/main
 ```
 
 ## Validasi
 
-```bash
+```bat
 npx hyperframes lint
 npx hyperframes check
 ```
 
-## Render 60 FPS
+## Preview
 
-```bash
-npx hyperframes render --fps 60 --quality high --output renders/stickman-vs-website-60fps.mp4
+```bat
+npx hyperframes preview
 ```
 
-Di Windows bisa juga langsung jalankan:
+## Render 60 FPS
 
 ```bat
 render-60fps.bat
 ```
 
-> Catatan: HyperFrames default ke 30 FPS jika flag `--fps 60` tidak diberikan. `data-fps="60"` dipakai sebagai composition hint, sedangkan flag CLI memastikan output final benar-benar 60 FPS.
+atau:
+
+```bat
+npx hyperframes render --fps 60 --quality high --output renders\stickman-vs-website-60fps.mp4
+```
 
 ## Struktur
 
-- `index.html` — root composition
-- `compositions/scene-01.html` — Scene 01 + rig Stickman + timeline GSAP
-- `assets/` — aset suara, gambar, atau media tambahan
-- `render-60fps.bat` — shortcut render Windows 60 FPS
+```text
+stikman_video/
+├── index.html
+├── compositions/
+│   └── scene-01.html
+├── Stickman_Set/
+│   ├── 00_Rig/
+│   ├── 01_Locomotion/
+│   ├── 02_Vertical/
+│   ├── 03_Interaction/
+│   ├── 04_Combat/
+│   ├── 05_Emotion/
+│   ├── 06_Sport_Special/
+│   ├── Export/
+│   └── animation-manifest.json
+├── assets/
+└── render-60fps.bat
+```
 
-## Roadmap
-
-1. Scene 01 — website normal + stickman masuk + menendang CTA
-2. Scene 02 — navbar/card jatuh seperti benda fisik
-3. Scene 03 — error popup + glitch
-4. Scene 04 — website hancur total
-5. Scene 05 — reveal website baru + punchline
+Scene 01 menggunakan library modular dari `Stickman_Set`, sehingga animasi berikutnya tidak perlu membangun karakter dari nol.
