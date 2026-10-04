@@ -102,7 +102,7 @@
         S.addPose(t,id,pose,at,fd,"sine.inOut");
         if (shadow) {
           const lift = (i===2 || i===6);
-          t.to(shadow,{scaleX:lift?.80:.92,scaleY:lift?.98:.84,duration:fd,ease:"sine.inOut"},at);
+          t.to(shadow,{scaleX:lift ? .80 : .92,scaleY:lift ? .98 : .84,duration:fd,ease:"sine.inOut"},at);
         }
       });
     }
@@ -122,7 +122,7 @@
       const at=c*cycleDuration+i*fd;
       S.addPose(t,id,pose,at,fd,"power1.inOut");
       if(root) t.to(root,{y:(i===1||i===4)?-8:-2,duration:fd,ease:"sine.inOut"},at);
-      if(shadow) t.to(shadow,{scaleX:(i===1||i===4)?.74:.90,duration:fd,ease:"sine.inOut"},at);
+      if(shadow) t.to(shadow,{scaleX:(i===1||i===4) ? .74 : .90,duration:fd,ease:"sine.inOut"},at);
     });
     return t;
   };
