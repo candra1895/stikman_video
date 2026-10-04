@@ -75,8 +75,8 @@
 
   const chain = (a,b,c) =>
     "M " + a[0] + " " + a[1] +
-    " Q " + b[0] + " " + b[1] +
-    " " + c[0] + " " + c[1];
+    " L " + b[0] + " " + b[1] +
+    " L " + c[0] + " " + c[1];
 
   S.attrsForPose = p => ({
     torso: {d: chain(p.neck, p.chest, p.pelvis)},
