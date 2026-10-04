@@ -26,13 +26,13 @@
       .fromTo("#popup-b",{scale:0,opacity:0},{scale:1,opacity:1,duration:.3,ease:"back.out(1.8)"},1.0)
       .add(fightStick.run(2,{distance:260,cycleDuration:.56}),.7)
       .add(fightStick.punch({target:"#popup-a"}),2.0)
-      .to("#popup-a",{x:360,rotation:55,opacity:0,duration:.5,ease:"power2.in"},2.35)
+      .to("#popup-a",{x:360,rotation:55,opacity:0,duration:.5,ease:"power2.in"},2.52)
       .fromTo("#giant-cursor",{x:180,y:-80,opacity:0,rotation:-25},{x:0,y:0,opacity:1,rotation:-12,duration:.45,ease:"power3.out"},3.0)
       .add(fightStick.hit({knockback:35}),3.35)
       .add(fightStick.jump({height:100,distance:145}),4.1)
-      .add(fightStick.run(1,{distance:120,cycleDuration:.52}),5.25)
+      .add(fightStick.run(1,{distance:120,cycleDuration:.52}),5.36)
       .add(fightStick.punch({target:"#popup-b"}),6.0)
-      .to("#popup-b",{x:330,y:-120,rotation:-45,opacity:0,duration:.48,ease:"power2.in"},6.35)
+      .to("#popup-b",{x:330,y:-120,rotation:-45,opacity:0,duration:.48,ease:"power2.in"},6.52)
       .to("#giant-cursor",{x:260,y:160,rotation:35,opacity:0,duration:.55,ease:"power2.in"},7.0)
       .add(fightStick.victory(),7.75);
     window.__timelines["scene-fight"]=fightTl;
