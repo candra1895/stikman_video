@@ -1,0 +1,30 @@
+<template>
+  <div id="scene-outro" class="scene-shell" data-composition-id="scene-outro" data-duration="7" data-width="1080" data-height="1920" data-fps="60">
+    <div class="scene-title">STICKMAN VS WEB — REBUILT</div>
+    <div id="outro-browser" class="browser">
+      <div class="browser-bar"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><div class="browser-address">www.now-it-works.com</div></div>
+      <div class="website" style="background:linear-gradient(180deg,#ffffff,#f2f4ff)">
+        <div class="web-navbar"><div class="web-logo">Web<span>Rebuilt</span></div><div class="web-links"><span>Fast</span><span>Clean</span><span>Simple</span></div></div>
+        <div class="web-hero" style="padding-top:110px"><div class="web-pill">PROBLEM SOLVED</div><h1 style="font-size:70px">Maybe it needed a redesign.</h1><p style="font-size:24px">No popups. No boss fights. Just a website that behaves.</p></div>
+        <div class="playfield">
+          <div class="floor"></div>
+          <div id="outro-shadow" class="character-shadow" style="left:350px"></div>
+          <div id="outro-root" class="character-root" style="left:310px"><div id="outro-host" class="character-host"></div></div>
+          <div id="outro-text" style="position:absolute;right:80px;bottom:180px;font-size:34px;font-weight:1000;color:#171c27;opacity:0">BAD WEBSITE?<br><span style="color:#5b67ff">WE FIX IT.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">04 — VICTORY</div>
+  </div>
+  <script>
+    const outroStick = new StickmanRig.Stickman("#outro-host",{root:"#outro-root",shadow:"#outro-shadow"});
+    const outroTl = gsap.timeline({paused:true});
+    outroTl.fromTo("#outro-browser",{scale:.94,opacity:0},{scale:1,opacity:1,duration:.75,ease:"power3.out"},.1)
+      .add(outroStick.victory(),1.0)
+      .to("#outro-text",{opacity:1,x:-15,duration:.55,ease:"power3.out"},2.0)
+      .add(outroStick.idle({duration:1.5}),3.0)
+      .to("#outro-root",{x:190,duration:1.2,ease:"power1.inOut"},4.5)
+      .to("#outro-shadow",{x:190,duration:1.2,ease:"power1.inOut"},4.5);
+    window.__timelines["scene-outro"]=outroTl;
+  </script>
+</template>
