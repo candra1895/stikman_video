@@ -1,24 +1,91 @@
-# Stickman vs Website
+# Stickman vs Web
 
-Video vertikal HyperFrames 1080x1920 / 60 FPS dengan karakter stickman tebal dan rig pose-driven reusable.
+Video HyperFrames vertikal 1080x1920 / 60 FPS dengan stickman SVG tebal, hierarchical rig, dan gerakan GSAP reusable.
 
-## Yang sudah tersedia
+## Arsitektur
 
-- Scene 01: website normal, stickman masuk, berjalan, berpikir, lalu menendang CTA.
-- Stickman_Set modular:
-  - 00_Rig
-  - 01_Locomotion
-  - 02_Vertical
-  - 03_Interaction
-  - 04_Combat
-  - 05_Emotion
-  - 06_Sport_Special
-  - Export
-- Walk cycle 8 pose dengan interpolasi 60 FPS.
-- Rig tebal berbasis titik sendi, bukan garis tipis.
-- Render shortcut Windows 60 FPS.
+```text
+stikman_video/
+├── rig/
+│   ├── stickman.svg
+│   ├── stickman.js
+│   └── rig.css
+├── moves/
+│   ├── _helpers.js
+│   ├── walk.js
+│   ├── run.js
+│   ├── jump.js
+│   ├── punch.js
+│   ├── kick.js
+│   ├── hit.js
+│   ├── climb.js
+│   └── victory.js
+├── scenes/
+│   ├── 01_intro.html
+│   ├── 02_fight.html
+│   ├── 03_boss.html
+│   └── 04_outro.html
+├── web-assets/
+│   └── ui.css
+├── audio/
+│   └── README.md
+├── index.html
+└── render-60fps.bat
+```
 
-## Sinkronkan versi terbaru ke PC
+## Rig
+
+Hierarki utama:
+
+```text
+pelvis
+├── chest
+│   ├── neck
+│   │   └── head
+│   ├── shoulder front
+│   │   └── elbow front
+│   └── shoulder back
+│       └── elbow back
+├── hip front
+│   └── knee front
+│       └── ankle front
+└── hip back
+    └── knee back
+        └── ankle back
+```
+
+Semua bagian adalah SVG nested groups. Rotasi parent otomatis membawa child, sehingga siku mengikuti bahu dan pergelangan kaki mengikuti lutut.
+
+## API gerakan
+
+Contoh di scene:
+
+```js
+const stickman = new StickmanRig.Stickman("#hero-host", {
+  root: "#hero-root",
+  shadow: "#hero-shadow"
+});
+
+timeline.add(stickman.walk(2), 1.0);
+timeline.add(stickman.jump(), 3.0);
+timeline.add(stickman.punch(), 4.5);
+timeline.add(stickman.kick(), 5.5);
+timeline.add(stickman.hit(), 6.5);
+timeline.add(stickman.climb(2), 7.0);
+```
+
+Walk menggunakan 4 pose dasar: contact, down, passing, up. Empat pose sisi sebaliknya dibuat otomatis dengan mirror, lalu GSAP menginterpolasi seluruh gerak pada render 60 FPS.
+
+## Video
+
+1. Intro — stickman vs cookie popup
+2. Fight — popup iklan + giant cursor
+3. Boss — 404 Not Found
+4. Outro — website rebuilt + victory
+
+Total: 36 detik.
+
+## Sinkronkan ke PC
 
 ```bat
 cd /d D:\stikman_video
@@ -26,50 +93,16 @@ git fetch origin
 git reset --hard origin/main
 ```
 
-## Validasi
+## Cek
 
 ```bat
 npx hyperframes lint
 npx hyperframes check
-```
-
-## Preview
-
-```bat
 npx hyperframes preview
 ```
 
-## Render 60 FPS
+## Render
 
 ```bat
 render-60fps.bat
 ```
-
-atau:
-
-```bat
-npx hyperframes render --fps 60 --quality high --output renders\stickman-vs-website-60fps.mp4
-```
-
-## Struktur
-
-```text
-stikman_video/
-├── index.html
-├── compositions/
-│   └── scene-01.html
-├── Stickman_Set/
-│   ├── 00_Rig/
-│   ├── 01_Locomotion/
-│   ├── 02_Vertical/
-│   ├── 03_Interaction/
-│   ├── 04_Combat/
-│   ├── 05_Emotion/
-│   ├── 06_Sport_Special/
-│   ├── Export/
-│   └── animation-manifest.json
-├── assets/
-└── render-60fps.bat
-```
-
-Scene 01 menggunakan library modular dari `Stickman_Set`, sehingga animasi berikutnya tidak perlu membangun karakter dari nol.
