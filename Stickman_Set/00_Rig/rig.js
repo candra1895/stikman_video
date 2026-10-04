@@ -32,29 +32,29 @@
       <svg class="sm-rig" viewBox="0 0 260 400" aria-label="Articulated stickman">
         <g class="sm-character">
           <path id="\${id}-arm-back" class="sm-limb sm-limb-back"/>
-          <circle id="\${id}-elbow-back" class="sm-joint sm-back-joint"/>
-          <circle id="\${id}-wrist-back" class="sm-hand sm-back-joint"/>
+          <circle id="\${id}-elbow-back" class="sm-joint sm-back-joint" r="10"/>
+          <circle id="\${id}-wrist-back" class="sm-hand sm-back-joint" r="9"/>
 
           <path id="\${id}-leg-back" class="sm-leg sm-limb-back"/>
           <path id="\${id}-foot-back" class="sm-foot sm-limb-back"/>
-          <circle id="\${id}-knee-back" class="sm-joint sm-back-joint"/>
+          <circle id="\${id}-knee-back" class="sm-joint sm-back-joint" r="10"/>
 
           <path id="\${id}-torso" class="sm-torso"/>
           <path id="\${id}-shoulders" class="sm-bridge"/>
           <path id="\${id}-hips" class="sm-bridge sm-hip-bridge"/>
-          <circle id="\${id}-chest" class="sm-core"/>
-          <circle id="\${id}-pelvis" class="sm-core"/>
+          <circle id="\${id}-chest" class="sm-core" r="13"/>
+          <circle id="\${id}-pelvis" class="sm-core" r="13"/>
 
           <path id="\${id}-leg-front" class="sm-leg"/>
           <path id="\${id}-foot-front" class="sm-foot"/>
-          <circle id="\${id}-knee-front" class="sm-joint"/>
+          <circle id="\${id}-knee-front" class="sm-joint" r="10"/>
 
           <path id="\${id}-arm-front" class="sm-limb"/>
-          <circle id="\${id}-elbow-front" class="sm-joint"/>
-          <circle id="\${id}-wrist-front" class="sm-hand"/>
+          <circle id="\${id}-elbow-front" class="sm-joint" r="10"/>
+          <circle id="\${id}-wrist-front" class="sm-hand" r="9"/>
 
-          <circle id="\${id}-head" class="sm-head"/>
-          <circle id="\${id}-eye" class="sm-eye"/>
+          <circle id="\${id}-head" class="sm-head" r="38"/>
+          <circle id="\${id}-eye" class="sm-eye" r="4.5"/>
         </g>
       </svg>\`;
 
