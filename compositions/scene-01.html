@@ -71,10 +71,7 @@
 
     .site {
       position: absolute;
-      left: 0;
-      right: 0;
-      top: 92px;
-      bottom: 0;
+      inset: 92px 0 0;
       background: #fff;
       color: #141923;
       overflow: hidden;
@@ -125,7 +122,7 @@
       margin: 34px auto 24px;
       max-width: 720px;
       font-size: 72px;
-      line-height: 0.98;
+      line-height: .98;
       letter-spacing: -4px;
     }
 
@@ -193,53 +190,54 @@
     #stickman {
       position: absolute;
       left: 120px;
-      bottom: 205px;
-      width: 250px;
-      height: 390px;
+      bottom: 190px;
+      width: 260px;
+      height: 400px;
       z-index: 30;
       overflow: visible;
       filter: drop-shadow(0 20px 18px rgba(0,0,0,.28));
+      will-change: transform;
     }
-
-    #stickman * { transform-box: fill-box; }
 
     .stick-line {
       stroke: #f2f4f8;
-      stroke-width: 18;
+      stroke-width: 17;
       stroke-linecap: round;
+      stroke-linejoin: round;
       fill: none;
     }
 
     .stick-head {
       fill: #f2f4f8;
       stroke: #0d1117;
-      stroke-width: 10;
+      stroke-width: 9;
     }
 
-    #arm-front, #arm-back { transform-origin: 10px 10px; }
-    #leg-front, #leg-back { transform-origin: 10px 10px; }
-    #lower-leg-front { transform-origin: 8px 8px; }
+    .eye {
+      fill: #0d1117;
+    }
 
     .shadow {
       position: absolute;
-      left: 140px;
-      bottom: 180px;
-      width: 190px;
-      height: 34px;
+      left: 145px;
+      bottom: 170px;
+      width: 185px;
+      height: 30px;
       border-radius: 50%;
       background: rgba(0,0,0,.38);
       filter: blur(8px);
       z-index: 25;
+      will-change: transform, opacity;
     }
 
     #bubble {
       position: absolute;
-      left: 230px;
+      left: 240px;
       bottom: 565px;
       min-width: 190px;
       padding: 20px 28px;
       border-radius: 26px 26px 26px 8px;
-      background: white;
+      background: #fff;
       color: #121722;
       font-size: 27px;
       font-weight: 900;
@@ -289,6 +287,7 @@
     data-duration="12"
     data-width="1080"
     data-height="1920"
+    data-fps="60"
   >
     <div class="stage-label">STICKMAN VS WEBSITE</div>
 
@@ -301,7 +300,7 @@
       </div>
 
       <div class="site">
-        <div class="nav" id="nav">
+        <div class="nav">
           <div class="logo">Web<span>Perfect</span></div>
           <div class="links">
             <span>Home</span>
@@ -317,7 +316,7 @@
           <div id="cta">CLICK ME</div>
         </div>
 
-        <div class="cards" id="cards">
+        <div class="cards">
           <div class="card">
             <div class="card-icon"></div>
             <strong>Super Fast</strong>
@@ -339,29 +338,27 @@
 
     <div class="shadow" id="shadow"></div>
 
-    <svg id="stickman" viewBox="0 0 250 390" aria-label="Stickman">
-      <circle class="stick-head" cx="125" cy="68" r="48"/>
-      <line class="stick-line" x1="125" y1="118" x2="125" y2="230"/>
+    <svg id="stickman" viewBox="0 0 260 400" aria-label="Stickman">
+      <g id="rig">
+        <circle class="stick-head" cx="130" cy="64" r="43"/>
+        <circle class="eye" cx="145" cy="58" r="4.5"/>
 
-      <g id="arm-back">
-        <line class="stick-line" x1="125" y1="145" x2="62" y2="205"/>
-        <line class="stick-line" x1="62" y1="205" x2="42" y2="270"/>
-      </g>
+        <line class="stick-line" x1="130" y1="108" x2="130" y2="224"/>
 
-      <g id="arm-front">
-        <line class="stick-line" x1="125" y1="145" x2="188" y2="205"/>
-        <line class="stick-line" x1="188" y1="205" x2="210" y2="265"/>
-      </g>
+        <g id="arm-back">
+          <path class="stick-line" d="M130 138 L87 188 L61 246"/>
+        </g>
 
-      <g id="leg-back">
-        <line class="stick-line" x1="125" y1="230" x2="78" y2="300"/>
-        <line class="stick-line" x1="78" y1="300" x2="56" y2="365"/>
-      </g>
+        <g id="arm-front">
+          <path class="stick-line" d="M130 138 L176 184 L205 238"/>
+        </g>
 
-      <g id="leg-front">
-        <line class="stick-line" x1="125" y1="230" x2="172" y2="300"/>
-        <g id="lower-leg-front">
-          <line class="stick-line" x1="172" y1="300" x2="201" y2="365"/>
+        <g id="leg-back">
+          <path class="stick-line" d="M130 224 L91 296 L68 365"/>
+        </g>
+
+        <g id="leg-front">
+          <path class="stick-line" d="M130 224 L173 296 L211 364"/>
         </g>
       </g>
     </svg>
@@ -375,157 +372,286 @@
   <script>
     const tl = gsap.timeline({ paused: true });
 
-    tl.set("#stickman", { x: -390, y: 0, rotation: 0 }, 0)
-      .set("#shadow", { x: -390, scaleX: 0.85, opacity: 0.25 }, 0)
-      .set("#cta", { x: 0, y: 0, rotation: 0, opacity: 1 }, 0)
+    const joints = {
+      armFront: "130 138",
+      armBack: "130 138",
+      legFront: "130 224",
+      legBack: "130 224"
+    };
+
+    tl.set("#stickman", {
+        x: -430,
+        y: 0,
+        rotation: 0,
+        transformOrigin: "50% 88%"
+      }, 0)
+      .set("#shadow", { x: -430, scaleX: .82, opacity: .22 }, 0)
+      .set("#cta", { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 }, 0)
       .set("#browser", { x: 0, y: 0, rotation: 0 }, 0)
       .set("#impact", { rotation: -12, scale: 0, transformOrigin: "50% 50%" }, 0)
 
-      .from("#browser", {
-        y: 90,
-        opacity: 0,
-        scale: 0.96,
-        duration: 0.9,
-        ease: "power3.out"
-      }, 0.15)
+      .set("#arm-front", { rotation: 0, svgOrigin: joints.armFront }, 0)
+      .set("#arm-back",  { rotation: 0, svgOrigin: joints.armBack }, 0)
+      .set("#leg-front", { rotation: 0, svgOrigin: joints.legFront }, 0)
+      .set("#leg-back",  { rotation: 0, svgOrigin: joints.legBack }, 0)
 
+      .from("#browser", {
+        y: 80,
+        opacity: 0,
+        scale: .97,
+        duration: .9,
+        ease: "power3.out"
+      }, .12)
+
+      /* WALK IN: fixed shoulder/hip pivots, synchronized gait. */
       .to("#stickman", {
-        x: 75,
-        duration: 2.3,
+        x: 58,
+        duration: 2.55,
         ease: "power1.inOut"
-      }, 1.35)
+      }, 1.15)
       .to("#shadow", {
-        x: 75,
-        opacity: 0.42,
-        duration: 2.3,
+        x: 58,
+        opacity: .42,
+        duration: 2.55,
         ease: "power1.inOut"
-      }, 1.35)
+      }, 1.15)
 
       .fromTo("#arm-front",
-        { rotation: 24 },
-        { rotation: -24, duration: 0.28, repeat: 7, yoyo: true, ease: "sine.inOut" },
-        1.35
+        { rotation: 20, svgOrigin: joints.armFront },
+        {
+          rotation: -20,
+          svgOrigin: joints.armFront,
+          duration: .255,
+          repeat: 9,
+          yoyo: true,
+          ease: "sine.inOut"
+        },
+        1.15
       )
       .fromTo("#arm-back",
-        { rotation: -24 },
-        { rotation: 24, duration: 0.28, repeat: 7, yoyo: true, ease: "sine.inOut" },
-        1.35
+        { rotation: -20, svgOrigin: joints.armBack },
+        {
+          rotation: 20,
+          svgOrigin: joints.armBack,
+          duration: .255,
+          repeat: 9,
+          yoyo: true,
+          ease: "sine.inOut"
+        },
+        1.15
       )
       .fromTo("#leg-front",
-        { rotation: -18 },
-        { rotation: 18, duration: 0.28, repeat: 7, yoyo: true, ease: "sine.inOut" },
-        1.35
+        { rotation: -15, svgOrigin: joints.legFront },
+        {
+          rotation: 15,
+          svgOrigin: joints.legFront,
+          duration: .255,
+          repeat: 9,
+          yoyo: true,
+          ease: "sine.inOut"
+        },
+        1.15
       )
       .fromTo("#leg-back",
-        { rotation: 18 },
-        { rotation: -18, duration: 0.28, repeat: 7, yoyo: true, ease: "sine.inOut" },
-        1.35
+        { rotation: 15, svgOrigin: joints.legBack },
+        {
+          rotation: -15,
+          svgOrigin: joints.legBack,
+          duration: .255,
+          repeat: 9,
+          yoyo: true,
+          ease: "sine.inOut"
+        },
+        1.15
       )
       .to("#stickman", {
-        y: -12,
-        duration: 0.14,
-        repeat: 15,
+        y: -7,
+        duration: .255,
+        repeat: 9,
         yoyo: true,
         ease: "sine.inOut"
-      }, 1.35)
+      }, 1.15)
+      .to("#shadow", {
+        scaleX: .90,
+        scaleY: .86,
+        duration: .255,
+        repeat: 9,
+        yoyo: true,
+        ease: "sine.inOut"
+      }, 1.15)
 
-      .to("#stickman", { y: 0, duration: 0.2 }, 3.75)
-      .to(["#arm-front", "#arm-back", "#leg-front", "#leg-back"], {
-        rotation: 0,
-        duration: 0.3,
-        ease: "power2.out"
-      }, 3.75)
-      .to("#bubble", { opacity: 1, y: -10, duration: 0.25 }, 4.15)
-      .to("#stickman", { rotation: 4, transformOrigin: "50% 85%", duration: 0.35 }, 4.35)
-      .to("#stickman", { rotation: -4, duration: 0.35 }, 4.75)
-      .to("#stickman", { rotation: 0, duration: 0.25 }, 5.1)
-      .to("#bubble", { opacity: 0, duration: 0.2 }, 5.35)
+      /* SETTLE: every limb returns to neutral before acting. */
+      .to("#stickman", { y: 0, duration: .18, ease: "power2.out" }, 3.70)
+      .to("#arm-front", { rotation: 0, svgOrigin: joints.armFront, duration: .28, ease: "power2.out" }, 3.70)
+      .to("#arm-back",  { rotation: 0, svgOrigin: joints.armBack, duration: .28, ease: "power2.out" }, 3.70)
+      .to("#leg-front", { rotation: 0, svgOrigin: joints.legFront, duration: .28, ease: "power2.out" }, 3.70)
+      .to("#leg-back",  { rotation: 0, svgOrigin: joints.legBack, duration: .28, ease: "power2.out" }, 3.70)
 
+      /* LOOK / THINK. */
+      .to("#bubble", { opacity: 1, y: -10, duration: .22, ease: "power2.out" }, 4.10)
+      .to("#stickman", { rotation: 2.2, duration: .30, ease: "sine.inOut" }, 4.35)
+      .to("#stickman", { rotation: -1.8, duration: .30, ease: "sine.inOut" }, 4.68)
+      .to("#stickman", { rotation: 0, duration: .24, ease: "sine.out" }, 5.00)
+      .to("#bubble", { opacity: 0, y: 0, duration: .18 }, 5.26)
+
+      /* WIND-UP: weight shifts to rear leg, arms counterbalance. */
       .to("#stickman", {
-        x: 35,
-        rotation: -6,
-        transformOrigin: "50% 85%",
-        duration: 0.45,
+        x: 28,
+        y: 5,
+        rotation: -4.5,
+        duration: .42,
         ease: "power2.out"
-      }, 5.7)
-      .to("#arm-front", { rotation: -38, duration: 0.35 }, 5.7)
-      .to("#arm-back", { rotation: 35, duration: 0.35 }, 5.7)
-      .to("#leg-front", { rotation: -18, duration: 0.35 }, 5.7)
-
-      .to("#stickman", {
-        x: 92,
-        rotation: 7,
-        duration: 0.18,
-        ease: "power4.in"
-      }, 6.25)
+      }, 5.52)
+      .to("#arm-front", {
+        rotation: -27,
+        svgOrigin: joints.armFront,
+        duration: .36,
+        ease: "power2.out"
+      }, 5.52)
+      .to("#arm-back", {
+        rotation: 25,
+        svgOrigin: joints.armBack,
+        duration: .36,
+        ease: "power2.out"
+      }, 5.52)
       .to("#leg-front", {
-        rotation: -72,
-        duration: 0.18,
-        ease: "power4.in"
-      }, 6.25)
-      .to("#lower-leg-front", {
-        rotation: 82,
-        duration: 0.18,
-        ease: "power4.in"
-      }, 6.25)
+        rotation: 18,
+        svgOrigin: joints.legFront,
+        duration: .36,
+        ease: "power2.out"
+      }, 5.52)
+      .to("#leg-back", {
+        rotation: -7,
+        svgOrigin: joints.legBack,
+        duration: .36,
+        ease: "power2.out"
+      }, 5.52)
 
+      /* KICK: single rigid leg = no detached knee/foot. */
+      .to("#stickman", {
+        x: 82,
+        y: -4,
+        rotation: 5,
+        duration: .20,
+        ease: "power4.in"
+      }, 6.06)
+      .to("#leg-front", {
+        rotation: -62,
+        svgOrigin: joints.legFront,
+        duration: .20,
+        ease: "power4.in"
+      }, 6.06)
+      .to("#arm-front", {
+        rotation: 18,
+        svgOrigin: joints.armFront,
+        duration: .20,
+        ease: "power3.in"
+      }, 6.06)
+      .to("#arm-back", {
+        rotation: -14,
+        svgOrigin: joints.armBack,
+        duration: .20,
+        ease: "power3.in"
+      }, 6.06)
+
+      /* IMPACT. */
       .to("#cta", {
         x: 390,
-        y: -80,
+        y: -82,
         rotation: 26,
         scale: 1.05,
-        duration: 0.55,
+        duration: .52,
         ease: "power3.out"
-      }, 6.43)
+      }, 6.26)
       .to("#cta", {
         x: 620,
         y: 420,
         rotation: 145,
         opacity: 0,
-        duration: 0.65,
+        duration: .62,
         ease: "power2.in"
-      }, 6.98)
+      }, 6.78)
       .to("#impact", {
         opacity: 1,
         scale: 1,
-        duration: 0.12,
-        ease: "back.out(2)"
-      }, 6.43)
+        duration: .10,
+        ease: "back.out(2.4)"
+      }, 6.26)
       .to("#impact", {
         opacity: 0,
-        scale: 1.5,
-        duration: 0.35
-      }, 6.75)
+        scale: 1.42,
+        duration: .28,
+        ease: "power2.out"
+      }, 6.40)
 
-      .to("#browser", { x: -16, duration: 0.05 }, 6.43)
-      .to("#browser", { x: 18, duration: 0.05 }, 6.48)
-      .to("#browser", { x: -10, duration: 0.05 }, 6.53)
-      .to("#browser", { x: 7, duration: 0.05 }, 6.58)
-      .to("#browser", { x: 0, duration: 0.08 }, 6.63)
+      /* 60fps-friendly micro camera shake. */
+      .to("#browser", { x: -14, y: 2, duration: .05, ease: "none" }, 6.26)
+      .to("#browser", { x: 13, y: -2, duration: .05, ease: "none" }, 6.31)
+      .to("#browser", { x: -8, y: 1, duration: .05, ease: "none" }, 6.36)
+      .to("#browser", { x: 5, y: 0, duration: .05, ease: "none" }, 6.41)
+      .to("#browser", { x: 0, y: 0, duration: .08, ease: "power2.out" }, 6.46)
 
-      .to("#lower-leg-front", { rotation: 0, duration: 0.3 }, 6.7)
-      .to("#leg-front", { rotation: 0, duration: 0.35 }, 6.7)
+      /* RECOVERY: foot comes home before the body settles. */
+      .to("#leg-front", {
+        rotation: -18,
+        svgOrigin: joints.legFront,
+        duration: .18,
+        ease: "power2.out"
+      }, 6.42)
+      .to("#leg-front", {
+        rotation: 0,
+        svgOrigin: joints.legFront,
+        duration: .24,
+        ease: "back.out(1.4)"
+      }, 6.60)
+      .to("#leg-back", {
+        rotation: 0,
+        svgOrigin: joints.legBack,
+        duration: .28,
+        ease: "power2.out"
+      }, 6.52)
+      .to("#arm-front", {
+        rotation: 0,
+        svgOrigin: joints.armFront,
+        duration: .28,
+        ease: "power2.out"
+      }, 6.54)
+      .to("#arm-back", {
+        rotation: 0,
+        svgOrigin: joints.armBack,
+        duration: .28,
+        ease: "power2.out"
+      }, 6.54)
       .to("#stickman", {
         rotation: 0,
         y: 0,
-        duration: 0.35,
+        x: 66,
+        duration: .34,
         ease: "power2.out"
-      }, 6.72)
+      }, 6.52)
 
-      .to("#stickman", { x: 70, duration: 0.35 }, 7.35)
-      .to("#stickman", { rotation: 3, duration: 0.35 }, 7.8)
-      .to("#stickman", { rotation: -3, duration: 0.35 }, 8.2)
-      .to("#stickman", { rotation: 0, duration: 0.25 }, 8.55)
+      /* REACTION. */
+      .to("#stickman", { rotation: 1.8, duration: .30, ease: "sine.inOut" }, 7.55)
+      .to("#stickman", { rotation: -1.4, duration: .30, ease: "sine.inOut" }, 7.90)
+      .to("#stickman", { rotation: 0, duration: .22, ease: "sine.out" }, 8.22)
       .to("#bubble", {
         opacity: 1,
         y: -10,
-        duration: 0.2,
-        onStart: function () {
+        duration: .20,
+        onStart: () => {
           document.querySelector("#bubble").textContent = "oh.";
         }
-      }, 8.75)
-      .to("#bubble", { opacity: 0, duration: 0.25 }, 10.15)
-      .to("#stickman", { y: -6, duration: 0.25, yoyo: true, repeat: 1 }, 10.45);
+      }, 8.52)
+      .to("#bubble", { opacity: 0, y: 0, duration: .24 }, 10.05)
+
+      /* BREATHING HOLD: tiny motion, no jitter. */
+      .to("#stickman", {
+        y: -3,
+        duration: .42,
+        repeat: 2,
+        yoyo: true,
+        ease: "sine.inOut"
+      }, 10.35);
 
     window.__timelines["scene-01"] = tl;
   </script>
