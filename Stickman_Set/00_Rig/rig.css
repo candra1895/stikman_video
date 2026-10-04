@@ -1,0 +1,57 @@
+.sm-rig {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+.sm-torso {
+  fill: none;
+  stroke: #171c27;
+  stroke-width: 30;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sm-bridge,
+.sm-limb,
+.sm-leg,
+.sm-foot {
+  fill: none;
+  stroke: #171c27;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sm-bridge { stroke-width: 25; }
+.sm-hip-bridge { stroke-width: 27; }
+.sm-limb { stroke-width: 22; }
+.sm-leg { stroke-width: 25; }
+.sm-foot { stroke-width: 18; }
+
+.sm-limb-back {
+  opacity: .67;
+  stroke-width: 20;
+}
+
+.sm-joint,
+.sm-core,
+.sm-hand {
+  fill: #171c27;
+}
+
+.sm-joint { r: 10px; }
+.sm-core { r: 13px; }
+.sm-hand { r: 9px; }
+
+.sm-back-joint { opacity: .68; }
+
+.sm-head {
+  fill: #171c27;
+  stroke: #171c27;
+  stroke-width: 8;
+}
+
+.sm-eye {
+  fill: #ffffff;
+}
