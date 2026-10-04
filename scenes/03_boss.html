@@ -1,0 +1,37 @@
+<template>
+  <div id="scene-boss" class="scene-shell" data-composition-id="scene-boss" data-duration="10" data-width="1080" data-height="1920" data-fps="60">
+    <div class="scene-title">STICKMAN VS WEB — FINAL BOSS</div>
+    <div id="boss-browser" class="browser">
+      <div class="browser-bar"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><div class="browser-address">www.where-did-the-page-go.com</div></div>
+      <div class="website">
+        <div class="web-navbar"><div class="web-logo">Lost<span>Page</span></div><div class="web-links"><span>Back</span><span>Refresh</span><span>Panic</span></div></div>
+        <div class="playfield" style="height:1038px">
+          <div class="floor"></div>
+          <div id="boss-shadow" class="character-shadow" style="left:72px"></div>
+          <div id="boss-root" class="character-root" style="left:34px"><div id="boss-host" class="character-host"></div></div>
+          <div id="boss-card" style="position:absolute;right:90px;bottom:115px;width:430px;height:600px;border-radius:34px;background:#171c27;color:#fff;box-shadow:0 30px 70px rgba(0,0,0,.28);display:flex;flex-direction:column;align-items:center;justify-content:center;will-change:transform,opacity">
+            <div style="font-size:150px;font-weight:1000;line-height:.9">404</div>
+            <div style="font-size:30px;font-weight:900;margin-top:22px">NOT FOUND</div>
+            <div style="font-size:17px;color:#aeb5c3;margin-top:12px">FINAL BOSS</div>
+          </div>
+          <div id="boss-impact" class="impact" style="right:440px;bottom:370px">K.O.!</div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">03 — 404 BOSS</div>
+  </div>
+  <script>
+    const bossStick = new StickmanRig.Stickman("#boss-host",{root:"#boss-root",shadow:"#boss-shadow"});
+    const bossTl = gsap.timeline({paused:true});
+    bossTl.set("#boss-root",{x:-70},0).set("#boss-shadow",{x:-70},0)
+      .fromTo("#boss-card",{y:-760,rotation:-8,opacity:0},{y:0,rotation:0,opacity:1,duration:.75,ease:"bounce.out"},.45)
+      .add(bossStick.run(2,{distance:220,cycleDuration:.54}),1.25)
+      .add(bossStick.climb(2,{rise:150,cycleDuration:.85}),2.45)
+      .add(bossStick.punch({target:"#boss-card"}),4.25)
+      .to("#boss-card",{x:24,rotation:3,duration:.12,yoyo:true,repeat:3,ease:"none"},4.5)
+      .add(bossStick.kick({target:"#boss-card",impact:"#boss-impact"}),5.05)
+      .to("#boss-card",{x:520,y:220,rotation:38,opacity:0,duration:.75,ease:"power3.in"},5.65)
+      .add(bossStick.victory(),7.2);
+    window.__timelines["scene-boss"]=bossTl;
+  </script>
+</template>
