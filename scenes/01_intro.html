@@ -1,0 +1,35 @@
+<template>
+  <div id="scene-intro" class="scene-shell" data-composition-id="scene-intro" data-duration="9" data-width="1080" data-height="1920" data-fps="60">
+    <div class="scene-title">STICKMAN VS WEB — INTRO</div>
+    <div id="intro-browser" class="browser">
+      <div class="browser-bar"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><div class="browser-address">www.too-many-cookies.com</div></div>
+      <div class="website">
+        <div class="web-navbar"><div class="web-logo">Web<span>Perfect</span></div><div class="web-links"><span>Home</span><span>Features</span><span>Pricing</span></div></div>
+        <div class="web-hero"><div class="web-pill">TOTALLY NORMAL WEBSITE</div><h1>Everything works perfectly.</h1><p>Except one tiny thing that refuses to get out of the way.</p></div>
+        <div class="playfield">
+          <div class="floor"></div>
+          <div id="intro-shadow" class="character-shadow" style="left:72px"></div>
+          <div id="intro-root" class="character-root" style="left:34px"><div id="intro-host" class="character-host"></div><div id="intro-speech" class="speech" style="left:136px;top:4px">seriously?</div></div>
+          <div id="cookie-box" class="popup" style="right:65px;bottom:105px;width:300px"><strong>🍪 Accept Cookies</strong><p>We use 47,392 cookies for absolutely no reason.</p><div id="cookie-btn" class="web-button" style="height:66px;margin-top:18px">ACCEPT ALL</div></div>
+          <div id="intro-impact" class="impact" style="right:285px;bottom:92px">BAM!</div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">01 — COOKIE PROBLEM</div>
+  </div>
+  <script>
+    const introStick = new StickmanRig.Stickman("#intro-host",{root:"#intro-root",shadow:"#intro-shadow"});
+    const introTl = gsap.timeline({paused:true});
+    introTl.fromTo("#intro-browser",{y:55,opacity:0,scale:.98},{y:0,opacity:1,scale:1,duration:.75,ease:"power3.out"},.1)
+      .set("#intro-root",{x:-270},0)
+      .set("#intro-shadow",{x:-270,opacity:.15},0)
+      .fromTo("#cookie-box",{scale:.82,opacity:0,y:35},{scale:1,opacity:1,y:0,duration:.45,ease:"back.out(1.6)"},1.1)
+      .add(introStick.walk(3,{distance:420,cycleDuration:.92}),1.0)
+      .to("#intro-speech",{opacity:1,y:-4,duration:.18},4.05)
+      .to("#intro-speech",{opacity:0,y:0,duration:.18},4.9)
+      .add(introStick.kick({target:"#cookie-box",impact:"#intro-impact"}),5.05)
+      .to("#cookie-box",{x:460,y:180,rotation:120,opacity:0,duration:.58,ease:"power2.in"},5.6)
+      .add(introStick.idle({duration:1.2}),6.8);
+    window.__timelines["scene-intro"]=introTl;
+  </script>
+</template>
