@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, height=1920" />
+  <title>Stickman vs Website — HyperFrames</title>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: #0d1117;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #main {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(93, 115, 255, 0.20), transparent 32%),
+        linear-gradient(180deg, #101724 0%, #090d14 100%);
+    }
+
+    .scene {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .stage-label {
+      position: absolute;
+      top: 82px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,.62);
+      font-size: 26px;
+      letter-spacing: 8px;
+      font-weight: 700;
+      z-index: 20;
+    }
+
+    .browser {
+      position: absolute;
+      left: 90px;
+      top: 235px;
+      width: 900px;
+      height: 1250px;
+      border-radius: 42px;
+      overflow: hidden;
+      background: #f7f8fb;
+      box-shadow: 0 40px 110px rgba(0,0,0,.46);
+      transform-origin: center center;
+    }
+
+    .browser-top {
+      height: 92px;
+      background: #e8eaf0;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+      gap: 14px;
+      border-bottom: 1px solid #d7dae3;
+    }
+
+    .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #bcc2cf;
+    }
+
+    .address {
+      margin-left: 14px;
+      height: 46px;
+      flex: 1;
+      border-radius: 18px;
+      background: #fff;
+      color: #808797;
+      display: flex;
+      align-items: center;
+      padding-left: 22px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .site {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 92px;
+      bottom: 0;
+      background: #fff;
+      color: #141923;
+      overflow: hidden;
+    }
+
+    .nav {
+      height: 110px;
+      display: flex;
+      align-items: center;
+      padding: 0 54px;
+      border-bottom: 1px solid #eceef4;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+    }
+
+    .logo span { color: #5b67ff; }
+
+    .links {
+      margin-left: auto;
+      display: flex;
+      gap: 34px;
+      color: #717887;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .hero {
+      padding: 96px 58px 0;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 13px 20px;
+      border-radius: 999px;
+      background: #eef0ff;
+      color: #5b67ff;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      margin: 34px auto 24px;
+      max-width: 720px;
+      font-size: 72px;
+      line-height: 0.98;
+      letter-spacing: -4px;
+    }
+
+    .sub {
+      max-width: 650px;
+      margin: 0 auto;
+      color: #767d8c;
+      font-size: 25px;
+      line-height: 1.5;
+    }
+
+    #cta {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 48px;
+      width: 300px;
+      height: 86px;
+      border-radius: 24px;
+      background: #5b67ff;
+      color: #fff;
+      font-size: 27px;
+      font-weight: 900;
+      box-shadow: 0 18px 40px rgba(91,103,255,.28);
+      transform-origin: 50% 50%;
+    }
+
+    .cards {
+      margin: 92px 54px 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      height: 220px;
+      border-radius: 28px;
+      background: #f3f5f9;
+      border: 1px solid #e5e8ef;
+      padding: 28px 24px;
+      text-align: left;
+    }
+
+    .card-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: #dfe3ff;
+      margin-bottom: 24px;
+    }
+
+    .card strong {
+      display: block;
+      font-size: 21px;
+      margin-bottom: 10px;
+    }
+
+    .card small {
+      color: #8a91a0;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    #stickman {
+      position: absolute;
+      left: 120px;
+      bottom: 205px;
+      width: 250px;
+      height: 390px;
+      z-index: 30;
+      overflow: visible;
+      filter: drop-shadow(0 20px 18px rgba(0,0,0,.28));
+    }
+
+    #stickman * {
+      transform-box: fill-box;
+    }
+
+    .stick-line {
+      stroke: #f2f4f8;
+      stroke-width: 18;
+      stroke-linecap: round;
+      fill: none;
+    }
+
+    .stick-head {
+      fill: #f2f4f8;
+      stroke: #0d1117;
+      stroke-width: 10;
+    }
+
+    #arm-front, #arm-back { transform-origin: 10px 10px; }
+    #leg-front, #leg-back { transform-origin: 10px 10px; }
+    #lower-leg-front { transform-origin: 8px 8px; }
+
+    .shadow {
+      position: absolute;
+      left: 140px;
+      bottom: 180px;
+      width: 190px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.38);
+      filter: blur(8px);
+      z-index: 25;
+    }
+
+    #bubble {
+      position: absolute;
+      left: 230px;
+      bottom: 565px;
+      min-width: 190px;
+      padding: 20px 28px;
+      border-radius: 26px 26px 26px 8px;
+      background: white;
+      color: #121722;
+      font-size: 27px;
+      font-weight: 900;
+      opacity: 0;
+      z-index: 40;
+      box-shadow: 0 16px 36px rgba(0,0,0,.22);
+    }
+
+    #impact {
+      position: absolute;
+      left: 590px;
+      top: 793px;
+      font-size: 100px;
+      font-weight: 1000;
+      color: #ffdf5b;
+      -webkit-text-stroke: 7px #111827;
+      transform: rotate(-12deg) scale(0);
+      opacity: 0;
+      z-index: 50;
+      text-shadow: 0 10px 0 rgba(0,0,0,.15);
+    }
+
+    .floor {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 150px;
+      height: 4px;
+      background: rgba(255,255,255,.11);
+    }
+
+    .caption {
+      position: absolute;
+      left: 50%;
+      bottom: 60px;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,.55);
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div
+    id="main"
+    data-composition-id="stickman-vs-website"
+    data-start="0"
+    data-duration="12"
+    data-width="1080"
+    data-height="1920"
+  >
+    <section
+      id="scene-01"
+      class="clip scene"
+      data-start="0"
+      data-duration="12"
+      data-track-index="0"
+    >
+      <div class="stage-label">STICKMAN VS WEBSITE</div>
+
+      <div class="browser" id="browser">
+        <div class="browser-top">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <div class="address">www.totally-perfect-website.com</div>
+        </div>
+
+        <div class="site">
+          <div class="nav" id="nav">
+            <div class="logo">Web<span>Perfect</span></div>
+            <div class="links">
+              <span>Home</span>
+              <span>Features</span>
+              <span>Pricing</span>
+            </div>
+          </div>
+
+          <div class="hero">
+            <div class="eyebrow">THE PERFECT WEBSITE</div>
+            <h1>Everything works perfectly.</h1>
+            <p class="sub">
+              Fast, beautiful, modern and definitely impossible to break.
+            </p>
+
+            <div id="cta">CLICK ME</div>
+          </div>
+
+          <div class="cards" id="cards">
+            <div class="card">
+              <div class="card-icon"></div>
+              <strong>Super Fast</strong>
+              <small>Nothing can possibly go wrong.</small>
+            </div>
+            <div class="card">
+              <div class="card-icon"></div>
+              <strong>Unbreakable</strong>
+              <small>Absolutely 100% stickman proof.</small>
+            </div>
+            <div class="card">
+              <div class="card-icon"></div>
+              <strong>Modern UI</strong>
+              <small>Please do not kick the buttons.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="shadow" id="shadow"></div>
+
+      <svg id="stickman" viewBox="0 0 250 390" aria-label="Stickman">
+        <circle class="stick-head" cx="125" cy="68" r="48"/>
+
+        <line class="stick-line" x1="125" y1="118" x2="125" y2="230"/>
+
+        <g id="arm-back">
+          <line class="stick-line" x1="125" y1="145" x2="62" y2="205"/>
+          <line class="stick-line" x1="62" y1="205" x2="42" y2="270"/>
+        </g>
+
+        <g id="arm-front">
+          <line class="stick-line" x1="125" y1="145" x2="188" y2="205"/>
+          <line class="stick-line" x1="188" y1="205" x2="210" y2="265"/>
+        </g>
+
+        <g id="leg-back">
+          <line class="stick-line" x1="125" y1="230" x2="78" y2="300"/>
+          <line class="stick-line" x1="78" y1="300" x2="56" y2="365"/>
+        </g>
+
+        <g id="leg-front">
+          <line class="stick-line" x1="125" y1="230" x2="172" y2="300"/>
+          <g id="lower-leg-front">
+            <line class="stick-line" x1="172" y1="300" x2="201" y2="365"/>
+          </g>
+        </g>
+      </svg>
+
+      <div id="bubble">hmm...</div>
+      <div id="impact">BAM!</div>
+      <div class="floor"></div>
+      <div class="caption">SCENE 01 — FIRST CONTACT</div>
+    </section>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+
+    const tl = gsap.timeline({ paused: true });
+
+    tl.set("#stickman", { x: -390, y: 0, rotation: 0 }, 0)
+      .set("#shadow", { x: -390, scaleX: 0.85, opacity: 0.25 }, 0)
+      .set("#cta", { x: 0, y: 0, rotation: 0, opacity: 1 }, 0)
+      .set("#browser", { x: 0, y: 0, rotation: 0 }, 0)
+
+      // Website reveal.
+      .from("#browser", {
+        y: 90,
+        opacity: 0,
+        scale: 0.96,
+        duration: 0.9,
+        ease: "power3.out"
+      }, 0.15)
+
+      // Stickman enters.
+      .to("#stickman", {
+        x: 75,
+        duration: 2.3,
+        ease: "power1.inOut"
+      }, 1.35)
+      .to("#shadow", {
+        x: 75,
+        opacity: 0.42,
+        duration: 2.3,
+        ease: "power1.inOut"
+      }, 1.35)
+
+      // Finite walking cycle.
+      .fromTo("#arm-front",
+        { rotation: 24 },
+        { rotation: -24, duration: 0.28, repeat: 7, yoyo: true, ease: "sine.inOut" },
+        1.35
+      )
+      .fromTo("#arm-back",
+        { rotation: -24 },
+        { rotation: 24, duration: 0.28, repeat: 7, yoyo: true, ease: "sine.inOut" },
+        1.35
+      )
+      .fromTo("#leg-front",
+        { rotation: -18 },
+        { rotation: 18, duration: 0.28, repeat: 7, yoyo: true, ease: "sine.inOut" },
+        1.35
+      )
+      .fromTo("#leg-back",
+        { rotation: 18 },
+        { rotation: -18, duration: 0.28, repeat: 7, yoyo: true, ease: "sine.inOut" },
+        1.35
+      )
+      .to("#stickman", {
+        y: -12,
+        duration: 0.14,
+        repeat: 15,
+        yoyo: true,
+        ease: "sine.inOut"
+      }, 1.35)
+
+      // Stops and inspects the CTA.
+      .to("#stickman", { y: 0, duration: 0.2 }, 3.75)
+      .to(["#arm-front", "#arm-back", "#leg-front", "#leg-back"], {
+        rotation: 0,
+        duration: 0.3,
+        ease: "power2.out"
+      }, 3.75)
+      .to("#bubble", { opacity: 1, y: -10, duration: 0.25 }, 4.15)
+      .to("#stickman", { rotation: 4, transformOrigin: "50% 85%", duration: 0.35 }, 4.35)
+      .to("#stickman", { rotation: -4, duration: 0.35 }, 4.75)
+      .to("#stickman", { rotation: 0, duration: 0.25 }, 5.1)
+      .to("#bubble", { opacity: 0, duration: 0.2 }, 5.35)
+
+      // Wind-up.
+      .to("#stickman", {
+        x: 35,
+        rotation: -6,
+        transformOrigin: "50% 85%",
+        duration: 0.45,
+        ease: "power2.out"
+      }, 5.7)
+      .to("#arm-front", { rotation: -38, duration: 0.35 }, 5.7)
+      .to("#arm-back", { rotation: 35, duration: 0.35 }, 5.7)
+      .to("#leg-front", { rotation: -18, duration: 0.35 }, 5.7)
+
+      // Kick.
+      .to("#stickman", {
+        x: 92,
+        rotation: 7,
+        duration: 0.18,
+        ease: "power4.in"
+      }, 6.25)
+      .to("#leg-front", {
+        rotation: -72,
+        duration: 0.18,
+        ease: "power4.in"
+      }, 6.25)
+      .to("#lower-leg-front", {
+        rotation: 82,
+        duration: 0.18,
+        ease: "power4.in"
+      }, 6.25)
+
+      // Impact: CTA becomes a physical object.
+      .to("#cta", {
+        x: 390,
+        y: -80,
+        rotation: 26,
+        scale: 1.05,
+        duration: 0.55,
+        ease: "power3.out"
+      }, 6.43)
+      .to("#cta", {
+        x: 620,
+        y: 420,
+        rotation: 145,
+        opacity: 0,
+        duration: 0.65,
+        ease: "power2.in"
+      }, 6.92)
+      .to("#impact", {
+        opacity: 1,
+        scale: 1,
+        duration: 0.12,
+        ease: "back.out(2)"
+      }, 6.43)
+      .to("#impact", {
+        opacity: 0,
+        scale: 1.5,
+        duration: 0.35
+      }, 6.75)
+
+      // Website camera shake.
+      .to("#browser", { x: -16, duration: 0.05 }, 6.43)
+      .to("#browser", { x: 18, duration: 0.05 }, 6.48)
+      .to("#browser", { x: -10, duration: 0.05 }, 6.53)
+      .to("#browser", { x: 7, duration: 0.05 }, 6.58)
+      .to("#browser", { x: 0, duration: 0.08 }, 6.63)
+
+      // Recover from kick.
+      .to("#lower-leg-front", { rotation: 0, duration: 0.3 }, 6.7)
+      .to("#leg-front", { rotation: 0, duration: 0.35 }, 6.7)
+      .to("#stickman", {
+        rotation: 0,
+        y: 0,
+        duration: 0.35,
+        ease: "power2.out"
+      }, 6.72)
+
+      // Stickman looks at the missing button.
+      .to("#stickman", { x: 70, duration: 0.35 }, 7.35)
+      .to("#stickman", { rotation: 3, duration: 0.35 }, 7.8)
+      .to("#stickman", { rotation: -3, duration: 0.35 }, 8.2)
+      .to("#stickman", { rotation: 0, duration: 0.25 }, 8.55)
+      .to("#bubble", {
+        opacity: 1,
+        y: -10,
+        duration: 0.2,
+        onStart: function () {
+          document.querySelector("#bubble").textContent = "oh.";
+        }
+      }, 8.75)
+      .to("#bubble", { opacity: 0, duration: 0.25 }, 10.15)
+
+      // Hold final frame for continuation into scene 02.
+      .to("#stickman", { y: -6, duration: 0.25, yoyo: true, repeat: 1 }, 10.45);
+
+    window.__timelines["stickman-vs-website"] = tl;
+  </script>
+</body>
+</html>
