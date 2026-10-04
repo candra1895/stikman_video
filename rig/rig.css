@@ -1,0 +1,16 @@
+.sm-rig{width:100%;height:100%;display:block;overflow:visible}
+.sm-rig *{vector-effect:non-scaling-stroke}
+.sm-torso,.sm-neck,.sm-hip,.sm-limb,.sm-forearm,.sm-leg,.sm-shin,.sm-foot{fill:none;stroke:#171c27;stroke-linecap:round;stroke-linejoin:round}
+.sm-torso{stroke-width:32}
+.sm-neck{stroke-width:18}
+.sm-hip{stroke-width:27}
+.sm-limb{stroke-width:24}
+.sm-forearm{stroke-width:22}
+.sm-leg{stroke-width:27}
+.sm-shin{stroke-width:25}
+.sm-foot{stroke-width:19}
+.sm-core,.sm-joint,.sm-hand,.sm-head{fill:#171c27}
+.sm-head{stroke:#171c27;stroke-width:8}
+.sm-eye{fill:#fff}
+.sm-back{opacity:.62}
+.sm-back-fill{opacity:.62}
