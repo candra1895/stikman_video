@@ -205,10 +205,10 @@
 
     #character-wrap {
       position: absolute;
-      left: 35px;
-      bottom: 18px;
-      width: 230px;
-      height: 330px;
+      left: 34px;
+      bottom: 5px;
+      width: 234px;
+      height: 342px;
       z-index: 35;
       will-change: transform;
       transform-origin: 50% 90%;
@@ -216,26 +216,30 @@
 
     #stickman {
       position: absolute;
-      left: 9px;
+      left: 8px;
       bottom: 0;
-      width: 208px;
-      height: 320px;
+      width: 214px;
+      height: 329px;
       overflow: visible;
-      filter: drop-shadow(0 12px 10px rgba(0,0,0,.15));
+      filter: drop-shadow(0 12px 10px rgba(0,0,0,.14));
     }
 
     .stick-line {
       stroke: #171c27;
-      stroke-width: 15;
+      stroke-width: 14;
       stroke-linecap: round;
       stroke-linejoin: round;
       fill: none;
     }
 
+    .joint {
+      fill: #171c27;
+    }
+
     .stick-head {
       fill: #fff;
       stroke: #171c27;
-      stroke-width: 10;
+      stroke-width: 9;
     }
 
     .eye {
@@ -244,8 +248,8 @@
 
     #speech {
       position: absolute;
-      left: 118px;
-      top: 8px;
+      left: 122px;
+      top: 5px;
       min-width: 132px;
       padding: 13px 19px;
       border-radius: 20px 20px 20px 7px;
@@ -262,11 +266,11 @@
     #shadow {
       position: absolute;
       left: 70px;
-      bottom: 24px;
-      width: 142px;
+      bottom: 22px;
+      width: 145px;
       height: 20px;
       border-radius: 50%;
-      background: rgba(20,25,35,.19);
+      background: rgba(20,25,35,.18);
       filter: blur(5px);
       z-index: 29;
       will-change: transform, opacity;
@@ -275,7 +279,7 @@
     .target-label {
       position: absolute;
       left: 548px;
-      bottom: 210px;
+      bottom: 160px;
       color: #9aa1b0;
       font-size: 14px;
       font-weight: 800;
@@ -285,7 +289,7 @@
     #cta {
       position: absolute;
       left: 520px;
-      bottom: 120px;
+      bottom: 74px;
       width: 205px;
       height: 72px;
       border-radius: 21px;
@@ -304,7 +308,7 @@
     #impact {
       position: absolute;
       left: 474px;
-      bottom: 118px;
+      bottom: 80px;
       font-size: 72px;
       font-weight: 1000;
       color: #ffdc4d;
@@ -383,35 +387,59 @@
         <div class="interaction-zone">
           <div class="zone-hint">LIVE DEMO</div>
           <div class="zone-floor"></div>
-
           <div id="shadow"></div>
 
           <div id="character-wrap">
             <div id="speech">hmm...</div>
 
             <svg id="stickman" viewBox="0 0 260 400" aria-label="Stickman">
-              <g id="body-rig">
-                <g id="head-rig">
-                  <circle class="stick-head" cx="130" cy="66" r="42"/>
-                  <circle class="eye" cx="145" cy="60" r="4.5"/>
+              <g id="pelvis-rig">
+                <g id="torso-rig">
+                  <path class="stick-line" d="M130 222 L130 118"/>
+                  <g id="head-rig">
+                    <circle class="stick-head" cx="130" cy="69" r="41"/>
+                    <circle class="eye" cx="145" cy="63" r="4.5"/>
+                  </g>
+
+                  <g id="arm-back-upper">
+                    <line class="stick-line" x1="130" y1="143" x2="93" y2="194"/>
+                    <circle class="joint" cx="93" cy="194" r="7"/>
+                    <g id="arm-back-lower">
+                      <line class="stick-line" x1="93" y1="194" x2="72" y2="252"/>
+                    </g>
+                  </g>
+
+                  <g id="arm-front-upper">
+                    <line class="stick-line" x1="130" y1="143" x2="168" y2="194"/>
+                    <circle class="joint" cx="168" cy="194" r="7"/>
+                    <g id="arm-front-lower">
+                      <line class="stick-line" x1="168" y1="194" x2="195" y2="251"/>
+                    </g>
+                  </g>
                 </g>
 
-                <path class="stick-line" d="M130 109 L130 224"/>
-
-                <g id="arm-back">
-                  <path class="stick-line" d="M130 140 Q105 165 88 195 Q76 218 64 246"/>
+                <g id="leg-back-upper">
+                  <line class="stick-line" x1="130" y1="222" x2="116" y2="294"/>
+                  <circle class="joint" cx="116" cy="294" r="7"/>
+                  <g id="leg-back-lower">
+                    <line class="stick-line" x1="116" y1="294" x2="106" y2="354"/>
+                    <circle class="joint" cx="106" cy="354" r="6"/>
+                    <g id="foot-back">
+                      <line class="stick-line" x1="106" y1="354" x2="136" y2="371"/>
+                    </g>
+                  </g>
                 </g>
 
-                <g id="arm-front">
-                  <path class="stick-line" d="M130 140 Q157 163 177 190 Q191 214 205 244"/>
-                </g>
-
-                <g id="leg-back">
-                  <path class="stick-line" d="M130 224 Q108 262 95 300 Q82 334 69 363 L91 363"/>
-                </g>
-
-                <g id="leg-front">
-                  <path class="stick-line" d="M130 224 Q154 261 172 298 Q190 332 209 362 L231 362"/>
+                <g id="leg-front-upper">
+                  <line class="stick-line" x1="130" y1="222" x2="145" y2="294"/>
+                  <circle class="joint" cx="145" cy="294" r="7"/>
+                  <g id="leg-front-lower">
+                    <line class="stick-line" x1="145" y1="294" x2="156" y2="354"/>
+                    <circle class="joint" cx="156" cy="354" r="6"/>
+                    <g id="foot-front">
+                      <line class="stick-line" x1="156" y1="354" x2="190" y2="370"/>
+                    </g>
+                  </g>
                 </g>
               </g>
             </svg>
@@ -430,67 +458,60 @@
   <script>
     const tl = gsap.timeline({ paused: true });
 
-    const shoulder = "130 140";
-    const hip = "130 224";
-    const neck = "130 109";
-    const torso = "130 224";
+    const J = {
+      pelvis: "130 222",
+      neck: "130 118",
+      shoulder: "130 143",
+      elbowFront: "168 194",
+      elbowBack: "93 194",
+      hip: "130 222",
+      kneeFront: "145 294",
+      kneeBack: "116 294",
+      ankleFront: "156 354",
+      ankleBack: "106 354"
+    };
+
+    const gait = (target, values, origin) => ({
+      keyframes: values.map((rotation) => ({
+        rotation,
+        svgOrigin: origin,
+        duration: .15,
+        ease: "sine.inOut"
+      })),
+      repeat: 2,
+      ease: "none"
+    });
 
     tl.set("#character-wrap", {
-        x: -300,
+        x: -310,
         y: 0,
         rotation: 0,
         transformOrigin: "50% 90%"
       }, 0)
       .set("#shadow", {
-        x: -300,
-        opacity: .18,
+        x: -310,
+        opacity: .16,
         scaleX: .82,
-        scaleY: .9,
+        scaleY: .88,
         transformOrigin: "50% 50%"
       }, 0)
-      .set("#body-rig", {
-        rotation: 0,
-        svgOrigin: torso
-      }, 0)
-      .set("#head-rig", {
-        rotation: 0,
-        svgOrigin: neck
-      }, 0)
-      .set("#arm-front", {
-        rotation: 0,
-        svgOrigin: shoulder
-      }, 0)
-      .set("#arm-back", {
-        rotation: 0,
-        svgOrigin: shoulder
-      }, 0)
-      .set("#leg-front", {
-        rotation: 0,
-        svgOrigin: hip
-      }, 0)
-      .set("#leg-back", {
-        rotation: 0,
-        svgOrigin: hip
-      }, 0)
-      .set("#cta", {
-        x: 0,
-        y: 0,
-        rotation: 0,
-        scale: 1,
-        opacity: 1
-      }, 0)
-      .set("#impact", {
-        rotation: -10,
-        scale: 0,
-        transformOrigin: "50% 50%"
-      }, 0)
-      .set("#browser", {
-        x: 0,
-        y: 0,
-        rotation: 0
-      }, 0)
+      .set("#pelvis-rig", { rotation: 0, svgOrigin: J.pelvis }, 0)
+      .set("#torso-rig", { rotation: 0, svgOrigin: J.pelvis }, 0)
+      .set("#head-rig", { rotation: 0, svgOrigin: J.neck }, 0)
+      .set("#arm-front-upper", { rotation: 0, svgOrigin: J.shoulder }, 0)
+      .set("#arm-front-lower", { rotation: 0, svgOrigin: J.elbowFront }, 0)
+      .set("#arm-back-upper", { rotation: 0, svgOrigin: J.shoulder }, 0)
+      .set("#arm-back-lower", { rotation: 0, svgOrigin: J.elbowBack }, 0)
+      .set("#leg-front-upper", { rotation: 0, svgOrigin: J.hip }, 0)
+      .set("#leg-front-lower", { rotation: 0, svgOrigin: J.kneeFront }, 0)
+      .set("#foot-front", { rotation: 0, svgOrigin: J.ankleFront }, 0)
+      .set("#leg-back-upper", { rotation: 0, svgOrigin: J.hip }, 0)
+      .set("#leg-back-lower", { rotation: 0, svgOrigin: J.kneeBack }, 0)
+      .set("#foot-back", { rotation: 0, svgOrigin: J.ankleBack }, 0)
+      .set("#cta", { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 }, 0)
+      .set("#impact", { rotation: -10, scale: 0, transformOrigin: "50% 50%" }, 0)
+      .set("#browser", { x: 0, y: 0, rotation: 0 }, 0)
 
-      /* Browser reveal */
       .from("#browser", {
         y: 64,
         opacity: 0,
@@ -499,7 +520,7 @@
         ease: "power3.out"
       }, .12)
 
-      /* Natural walk-in: 3 full gait cycles */
+      /* Walk translation: 3 full gait cycles over 2.7 seconds */
       .to("#character-wrap", {
         x: 250,
         duration: 2.70,
@@ -507,271 +528,124 @@
       }, 1.00)
       .to("#shadow", {
         x: 250,
-        opacity: .26,
+        opacity: .25,
         duration: 2.70,
         ease: "power1.inOut"
       }, 1.00)
 
-      .fromTo("#leg-front",
-        { rotation: -18, svgOrigin: hip },
-        {
-          rotation: 18,
-          svgOrigin: hip,
-          duration: .45,
-          repeat: 5,
-          yoyo: true,
-          ease: "sine.inOut"
-        },
-        1.00
-      )
-      .fromTo("#leg-back",
-        { rotation: 18, svgOrigin: hip },
-        {
-          rotation: -18,
-          svgOrigin: hip,
-          duration: .45,
-          repeat: 5,
-          yoyo: true,
-          ease: "sine.inOut"
-        },
-        1.00
-      )
-      .fromTo("#arm-front",
-        { rotation: 22, svgOrigin: shoulder },
-        {
-          rotation: -22,
-          svgOrigin: shoulder,
-          duration: .45,
-          repeat: 5,
-          yoyo: true,
-          ease: "sine.inOut"
-        },
-        1.00
-      )
-      .fromTo("#arm-back",
-        { rotation: -22, svgOrigin: shoulder },
-        {
-          rotation: 22,
-          svgOrigin: shoulder,
-          duration: .45,
-          repeat: 5,
-          yoyo: true,
-          ease: "sine.inOut"
-        },
-        1.00
-      )
-      .fromTo("#body-rig",
-        { rotation: 1.7, svgOrigin: torso },
-        {
-          rotation: -1.7,
-          svgOrigin: torso,
-          duration: .45,
-          repeat: 5,
-          yoyo: true,
-          ease: "sine.inOut"
-        },
-        1.00
-      )
-      .fromTo("#head-rig",
-        { rotation: -1.2, svgOrigin: neck },
-        {
-          rotation: 1.2,
-          svgOrigin: neck,
-          duration: .45,
-          repeat: 5,
-          yoyo: true,
-          ease: "sine.inOut"
-        },
-        1.00
-      )
+      /* Pelvis/body rhythm */
       .to("#character-wrap", {
-        y: -5,
-        duration: .225,
-        repeat: 11,
-        yoyo: true,
-        ease: "sine.inOut"
+        keyframes: [
+          { y: 0, duration: .15 },
+          { y: -5, duration: .15 },
+          { y: -2, duration: .15 },
+          { y: -6, duration: .15 },
+          { y: -3, duration: .15 },
+          { y: 0, duration: .15 }
+        ],
+        repeat: 2,
+        ease: "none"
       }, 1.00)
       .to("#shadow", {
-        scaleX: .94,
-        scaleY: .78,
-        duration: .225,
-        repeat: 11,
-        yoyo: true,
-        ease: "sine.inOut"
+        keyframes: [
+          { scaleX: .92, scaleY: .82, duration: .15 },
+          { scaleX: .82, scaleY: .94, duration: .15 },
+          { scaleX: .88, scaleY: .86, duration: .15 },
+          { scaleX: .80, scaleY: .96, duration: .15 },
+          { scaleX: .87, scaleY: .87, duration: .15 },
+          { scaleX: .92, scaleY: .82, duration: .15 }
+        ],
+        repeat: 2,
+        ease: "none"
       }, 1.00)
+      .to("#pelvis-rig", gait("#pelvis-rig", [-2.5, -1, 1.6, 2.5, .5, -2.5], J.pelvis), 1.00)
+      .to("#torso-rig", gait("#torso-rig", [1.8, .8, -1.2, -1.8, -.4, 1.8], J.pelvis), 1.00)
+      .to("#head-rig", gait("#head-rig", [-1.2, -.4, .8, 1.2, .3, -1.2], J.neck), 1.00)
 
-      /* Soft settle after walking */
-      .to("#character-wrap", {
-        y: 0,
-        duration: .20,
-        ease: "power2.out"
-      }, 3.72)
-      .to("#leg-front", {
-        rotation: 0,
-        svgOrigin: hip,
-        duration: .28,
-        ease: "power2.out"
-      }, 3.72)
-      .to("#leg-back", {
-        rotation: 0,
-        svgOrigin: hip,
-        duration: .28,
-        ease: "power2.out"
-      }, 3.72)
-      .to("#arm-front", {
-        rotation: 0,
-        svgOrigin: shoulder,
-        duration: .28,
-        ease: "power2.out"
-      }, 3.72)
-      .to("#arm-back", {
-        rotation: 0,
-        svgOrigin: shoulder,
-        duration: .28,
-        ease: "power2.out"
-      }, 3.72)
-      .to("#body-rig", {
-        rotation: 0,
-        svgOrigin: torso,
-        duration: .28,
-        ease: "power2.out"
-      }, 3.72)
-      .to("#head-rig", {
-        rotation: 0,
-        svgOrigin: neck,
-        duration: .28,
-        ease: "power2.out"
-      }, 3.72)
-      .to("#shadow", {
-        scaleX: .88,
-        scaleY: .88,
-        duration: .22,
-        ease: "power2.out"
-      }, 3.72)
+      /* Right/front leg: heel strike -> loading -> stance -> toe off -> swing -> next strike */
+      .to("#leg-front-upper", gait("#leg-front-upper", [-23, -12, 2, 18, 8, -23], J.hip), 1.00)
+      .to("#leg-front-lower", gait("#leg-front-lower", [4, 18, 8, -16, -28, 4], J.kneeFront), 1.00)
+      .to("#foot-front", gait("#foot-front", [10, 2, -8, 22, 14, 10], J.ankleFront), 1.00)
 
-      /* Notice the button */
-      .to("#head-rig", {
-        rotation: 5,
-        svgOrigin: neck,
-        duration: .32,
-        ease: "sine.inOut"
-      }, 4.12)
-      .to("#speech", {
-        opacity: 1,
-        y: -4,
-        duration: .20,
-        ease: "power2.out"
-      }, 4.18)
-      .to("#head-rig", {
-        rotation: -2,
-        svgOrigin: neck,
-        duration: .30,
-        ease: "sine.inOut"
-      }, 4.55)
-      .to("#head-rig", {
-        rotation: 0,
-        svgOrigin: neck,
-        duration: .24,
-        ease: "sine.out"
-      }, 4.88)
-      .to("#speech", {
-        opacity: 0,
-        y: 0,
-        duration: .18,
-        ease: "power2.in"
-      }, 5.12)
+      /* Left/back leg is phase shifted */
+      .to("#leg-back-upper", gait("#leg-back-upper", [18, 8, -22, -12, 4, 18], J.hip), 1.00)
+      .to("#leg-back-lower", gait("#leg-back-lower", [-18, -28, 5, 18, 9, -18], J.kneeBack), 1.00)
+      .to("#foot-back", gait("#foot-back", [20, 12, 9, 1, -10, 20], J.ankleBack), 1.00)
 
-      /* Wind-up: weight shifts back, arms counterbalance */
+      /* Arms counter-swing with elbow follow-through */
+      .to("#arm-front-upper", gait("#arm-front-upper", [20, 9, -12, -22, -7, 20], J.shoulder), 1.00)
+      .to("#arm-front-lower", gait("#arm-front-lower", [-12, -4, 10, 15, 2, -12], J.elbowFront), 1.00)
+      .to("#arm-back-upper", gait("#arm-back-upper", [-20, -8, 13, 22, 6, -20], J.shoulder), 1.00)
+      .to("#arm-back-lower", gait("#arm-back-lower", [13, 5, -8, -14, -2, 13], J.elbowBack), 1.00)
+
+      /* Settle from last heel strike into neutral stance */
+      .to("#character-wrap", { y: 0, duration: .18, ease: "power2.out" }, 3.72)
+      .to("#pelvis-rig", { rotation: 0, svgOrigin: J.pelvis, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#torso-rig", { rotation: 0, svgOrigin: J.pelvis, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#head-rig", { rotation: 0, svgOrigin: J.neck, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#arm-front-upper", { rotation: 0, svgOrigin: J.shoulder, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#arm-front-lower", { rotation: 0, svgOrigin: J.elbowFront, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#arm-back-upper", { rotation: 0, svgOrigin: J.shoulder, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#arm-back-lower", { rotation: 0, svgOrigin: J.elbowBack, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#leg-front-upper", { rotation: 0, svgOrigin: J.hip, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#leg-front-lower", { rotation: 0, svgOrigin: J.kneeFront, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#foot-front", { rotation: 0, svgOrigin: J.ankleFront, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#leg-back-upper", { rotation: 0, svgOrigin: J.hip, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#leg-back-lower", { rotation: 0, svgOrigin: J.kneeBack, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#foot-back", { rotation: 0, svgOrigin: J.ankleBack, duration: .28, ease: "power2.out" }, 3.72)
+      .to("#shadow", { scaleX: .88, scaleY: .88, duration: .24, ease: "power2.out" }, 3.72)
+
+      /* Look at button */
+      .to("#head-rig", { rotation: 6, svgOrigin: J.neck, duration: .30, ease: "sine.inOut" }, 4.12)
+      .to("#speech", { opacity: 1, y: -4, duration: .20, ease: "power2.out" }, 4.18)
+      .to("#head-rig", { rotation: -2, svgOrigin: J.neck, duration: .30, ease: "sine.inOut" }, 4.54)
+      .to("#head-rig", { rotation: 0, svgOrigin: J.neck, duration: .24, ease: "sine.out" }, 4.88)
+      .to("#speech", { opacity: 0, y: 0, duration: .18, ease: "power2.in" }, 5.12)
+
+      /* Kick preparation: bend front knee and shift weight to support leg */
       .to("#character-wrap", {
         x: 224,
-        y: 3,
-        rotation: -4,
+        y: 4,
+        rotation: -3.5,
         duration: .42,
         ease: "power2.out"
       }, 5.34)
-      .to("#shadow", {
-        x: 224,
-        scaleX: 1.02,
-        duration: .42,
-        ease: "power2.out"
-      }, 5.34)
-      .to("#body-rig", {
-        rotation: -4,
-        svgOrigin: torso,
-        duration: .38,
-        ease: "power2.out"
-      }, 5.34)
-      .to("#arm-front", {
-        rotation: -28,
-        svgOrigin: shoulder,
-        duration: .38,
-        ease: "power2.out"
-      }, 5.34)
-      .to("#arm-back", {
-        rotation: 26,
-        svgOrigin: shoulder,
-        duration: .38,
-        ease: "power2.out"
-      }, 5.34)
-      .to("#leg-front", {
-        rotation: 20,
-        svgOrigin: hip,
-        duration: .38,
-        ease: "power2.out"
-      }, 5.34)
-      .to("#leg-back", {
-        rotation: -8,
-        svgOrigin: hip,
-        duration: .38,
-        ease: "power2.out"
-      }, 5.34)
+      .to("#shadow", { x: 224, scaleX: 1.02, duration: .42, ease: "power2.out" }, 5.34)
+      .to("#pelvis-rig", { rotation: -4, svgOrigin: J.pelvis, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#torso-rig", { rotation: -5, svgOrigin: J.pelvis, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#arm-front-upper", { rotation: -28, svgOrigin: J.shoulder, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#arm-front-lower", { rotation: 18, svgOrigin: J.elbowFront, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#arm-back-upper", { rotation: 26, svgOrigin: J.shoulder, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#arm-back-lower", { rotation: -12, svgOrigin: J.elbowBack, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#leg-front-upper", { rotation: 20, svgOrigin: J.hip, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#leg-front-lower", { rotation: -42, svgOrigin: J.kneeFront, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#foot-front", { rotation: 14, svgOrigin: J.ankleFront, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#leg-back-upper", { rotation: -6, svgOrigin: J.hip, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#leg-back-lower", { rotation: 8, svgOrigin: J.kneeBack, duration: .38, ease: "power2.out" }, 5.34)
+      .to("#foot-back", { rotation: -8, svgOrigin: J.ankleBack, duration: .38, ease: "power2.out" }, 5.34)
 
-      /* Kick - foot lands at the left edge of CTA */
+      /* Kick extension: thigh swings, knee snaps open, ankle locks at impact */
       .to("#character-wrap", {
         x: 292,
         y: -2,
-        rotation: 4,
+        rotation: 3.5,
         duration: .18,
         ease: "power4.in"
       }, 5.96)
-      .to("#shadow", {
-        x: 292,
-        scaleX: .82,
-        duration: .18,
-        ease: "power4.in"
-      }, 5.96)
-      .to("#body-rig", {
-        rotation: 5,
-        svgOrigin: torso,
-        duration: .18,
-        ease: "power4.in"
-      }, 5.96)
-      .to("#leg-front", {
-        rotation: -49,
-        svgOrigin: hip,
-        duration: .18,
-        ease: "power4.in"
-      }, 5.96)
-      .to("#leg-back", {
-        rotation: 5,
-        svgOrigin: hip,
-        duration: .18,
-        ease: "power4.in"
-      }, 5.96)
-      .to("#arm-front", {
-        rotation: 17,
-        svgOrigin: shoulder,
-        duration: .18,
-        ease: "power3.in"
-      }, 5.96)
-      .to("#arm-back", {
-        rotation: -17,
-        svgOrigin: shoulder,
-        duration: .18,
-        ease: "power3.in"
-      }, 5.96)
+      .to("#shadow", { x: 292, scaleX: .80, duration: .18, ease: "power4.in" }, 5.96)
+      .to("#pelvis-rig", { rotation: 5, svgOrigin: J.pelvis, duration: .18, ease: "power4.in" }, 5.96)
+      .to("#torso-rig", { rotation: 6, svgOrigin: J.pelvis, duration: .18, ease: "power4.in" }, 5.96)
+      .to("#leg-front-upper", { rotation: -47, svgOrigin: J.hip, duration: .18, ease: "power4.in" }, 5.96)
+      .to("#leg-front-lower", { rotation: 16, svgOrigin: J.kneeFront, duration: .18, ease: "power4.in" }, 5.96)
+      .to("#foot-front", { rotation: -12, svgOrigin: J.ankleFront, duration: .18, ease: "power4.in" }, 5.96)
+      .to("#leg-back-upper", { rotation: 5, svgOrigin: J.hip, duration: .18, ease: "power4.in" }, 5.96)
+      .to("#leg-back-lower", { rotation: -5, svgOrigin: J.kneeBack, duration: .18, ease: "power4.in" }, 5.96)
+      .to("#arm-front-upper", { rotation: 18, svgOrigin: J.shoulder, duration: .18, ease: "power3.in" }, 5.96)
+      .to("#arm-front-lower", { rotation: -8, svgOrigin: J.elbowFront, duration: .18, ease: "power3.in" }, 5.96)
+      .to("#arm-back-upper", { rotation: -18, svgOrigin: J.shoulder, duration: .18, ease: "power3.in" }, 5.96)
+      .to("#arm-back-lower", { rotation: 7, svgOrigin: J.elbowBack, duration: .18, ease: "power3.in" }, 5.96)
 
-      /* Exact impact */
+      /* Impact */
       .to("#cta", {
         x: 235,
         y: -18,
@@ -780,18 +654,8 @@
         duration: .48,
         ease: "power3.out"
       }, 6.14)
-      .to("#impact", {
-        opacity: 1,
-        scale: 1,
-        duration: .10,
-        ease: "back.out(2.6)"
-      }, 6.14)
-      .to("#impact", {
-        opacity: 0,
-        scale: 1.38,
-        duration: .28,
-        ease: "power2.out"
-      }, 6.28)
+      .to("#impact", { opacity: 1, scale: 1, duration: .10, ease: "back.out(2.6)" }, 6.14)
+      .to("#impact", { opacity: 0, scale: 1.38, duration: .28, ease: "power2.out" }, 6.28)
       .to("#cta", {
         x: 420,
         y: 250,
@@ -801,83 +665,36 @@
         ease: "power2.in"
       }, 6.62)
 
-      /* Short camera impulse */
+      /* Camera impulse */
       .to("#browser", { x: -10, y: 2, duration: .05, ease: "none" }, 6.14)
       .to("#browser", { x: 9, y: -2, duration: .05, ease: "none" }, 6.19)
       .to("#browser", { x: -5, y: 1, duration: .05, ease: "none" }, 6.24)
       .to("#browser", { x: 3, y: 0, duration: .05, ease: "none" }, 6.29)
       .to("#browser", { x: 0, y: 0, duration: .08, ease: "power2.out" }, 6.34)
 
-      /* Recovery - foot returns first, body follows */
-      .to("#leg-front", {
-        rotation: -15,
-        svgOrigin: hip,
-        duration: .18,
-        ease: "power2.out"
-      }, 6.34)
-      .to("#leg-front", {
-        rotation: 0,
-        svgOrigin: hip,
-        duration: .25,
-        ease: "back.out(1.45)"
-      }, 6.52)
-      .to("#leg-back", {
-        rotation: 0,
-        svgOrigin: hip,
-        duration: .28,
-        ease: "power2.out"
-      }, 6.38)
-      .to("#arm-front", {
-        rotation: 0,
-        svgOrigin: shoulder,
-        duration: .28,
-        ease: "power2.out"
-      }, 6.38)
-      .to("#arm-back", {
-        rotation: 0,
-        svgOrigin: shoulder,
-        duration: .28,
-        ease: "power2.out"
-      }, 6.38)
-      .to("#body-rig", {
-        rotation: 0,
-        svgOrigin: torso,
-        duration: .30,
-        ease: "power2.out"
-      }, 6.38)
-      .to("#character-wrap", {
-        x: 268,
-        y: 0,
-        rotation: 0,
-        duration: .34,
-        ease: "power2.out"
-      }, 6.38)
-      .to("#shadow", {
-        x: 268,
-        scaleX: .88,
-        duration: .34,
-        ease: "power2.out"
-      }, 6.38)
+      /* Recovery */
+      .to("#leg-front-upper", { rotation: -12, svgOrigin: J.hip, duration: .18, ease: "power2.out" }, 6.34)
+      .to("#leg-front-lower", { rotation: -24, svgOrigin: J.kneeFront, duration: .18, ease: "power2.out" }, 6.34)
+      .to("#foot-front", { rotation: 6, svgOrigin: J.ankleFront, duration: .18, ease: "power2.out" }, 6.34)
+      .to("#leg-front-upper", { rotation: 0, svgOrigin: J.hip, duration: .25, ease: "back.out(1.45)" }, 6.52)
+      .to("#leg-front-lower", { rotation: 0, svgOrigin: J.kneeFront, duration: .25, ease: "back.out(1.45)" }, 6.52)
+      .to("#foot-front", { rotation: 0, svgOrigin: J.ankleFront, duration: .25, ease: "back.out(1.45)" }, 6.52)
+      .to("#leg-back-upper", { rotation: 0, svgOrigin: J.hip, duration: .28, ease: "power2.out" }, 6.38)
+      .to("#leg-back-lower", { rotation: 0, svgOrigin: J.kneeBack, duration: .28, ease: "power2.out" }, 6.38)
+      .to("#foot-back", { rotation: 0, svgOrigin: J.ankleBack, duration: .28, ease: "power2.out" }, 6.38)
+      .to("#arm-front-upper", { rotation: 0, svgOrigin: J.shoulder, duration: .28, ease: "power2.out" }, 6.38)
+      .to("#arm-front-lower", { rotation: 0, svgOrigin: J.elbowFront, duration: .28, ease: "power2.out" }, 6.38)
+      .to("#arm-back-upper", { rotation: 0, svgOrigin: J.shoulder, duration: .28, ease: "power2.out" }, 6.38)
+      .to("#arm-back-lower", { rotation: 0, svgOrigin: J.elbowBack, duration: .28, ease: "power2.out" }, 6.38)
+      .to("#pelvis-rig", { rotation: 0, svgOrigin: J.pelvis, duration: .30, ease: "power2.out" }, 6.38)
+      .to("#torso-rig", { rotation: 0, svgOrigin: J.pelvis, duration: .30, ease: "power2.out" }, 6.38)
+      .to("#character-wrap", { x: 268, y: 0, rotation: 0, duration: .34, ease: "power2.out" }, 6.38)
+      .to("#shadow", { x: 268, scaleX: .88, duration: .34, ease: "power2.out" }, 6.38)
 
       /* Reaction */
-      .to("#head-rig", {
-        rotation: 7,
-        svgOrigin: neck,
-        duration: .30,
-        ease: "sine.inOut"
-      }, 7.48)
-      .to("#head-rig", {
-        rotation: -4,
-        svgOrigin: neck,
-        duration: .30,
-        ease: "sine.inOut"
-      }, 7.82)
-      .to("#head-rig", {
-        rotation: 0,
-        svgOrigin: neck,
-        duration: .24,
-        ease: "sine.out"
-      }, 8.16)
+      .to("#head-rig", { rotation: 7, svgOrigin: J.neck, duration: .30, ease: "sine.inOut" }, 7.48)
+      .to("#head-rig", { rotation: -4, svgOrigin: J.neck, duration: .30, ease: "sine.inOut" }, 7.82)
+      .to("#head-rig", { rotation: 0, svgOrigin: J.neck, duration: .24, ease: "sine.out" }, 8.16)
       .to("#speech", {
         opacity: 1,
         y: -4,
@@ -887,14 +704,9 @@
           document.querySelector("#speech").textContent = "oh.";
         }
       }, 8.48)
-      .to("#speech", {
-        opacity: 0,
-        y: 0,
-        duration: .22,
-        ease: "power2.in"
-      }, 9.90)
+      .to("#speech", { opacity: 0, y: 0, duration: .22, ease: "power2.in" }, 9.90)
 
-      /* Quiet breathing hold */
+      /* Breathing hold */
       .to("#character-wrap", {
         y: -2.5,
         duration: .46,
