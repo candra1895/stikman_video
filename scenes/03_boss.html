@@ -28,9 +28,9 @@
       .add(bossStick.run(2,{distance:220,cycleDuration:.54}),1.25)
       .add(bossStick.climb(2,{rise:150,cycleDuration:.85}),2.45)
       .add(bossStick.punch({target:"#boss-card"}),4.25)
-      .to("#boss-card",{x:24,rotation:3,duration:.12,yoyo:true,repeat:3,ease:"none"},4.5)
+      .to("#boss-card",{x:24,rotation:3,duration:.12,yoyo:true,repeat:3,ease:"none"},4.78)
       .add(bossStick.kick({target:"#boss-card",impact:"#boss-impact"}),5.05)
-      .to("#boss-card",{x:520,y:220,rotation:38,opacity:0,duration:.75,ease:"power3.in"},5.65)
+      .to("#boss-card",{x:520,y:220,rotation:38,opacity:0,duration:.75,ease:"power3.in"},6.05)
       .add(bossStick.victory(),7.2);
     window.__timelines["scene-boss"]=bossTl;
   </script>
