@@ -3,57 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=1080, height=1920" />
-  <title>Stickman vs Website — HyperFrames</title>
+  <title>Stickman vs Web — HyperFrames</title>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-  <link rel="stylesheet" href="Stickman_Set/00_Rig/rig.css" />
 
-  <script src="Stickman_Set/00_Rig/rig.js"></script>
-  <script src="Stickman_Set/01_Locomotion/locomotion.js"></script>
-  <script src="Stickman_Set/02_Vertical/vertical.js"></script>
-  <script src="Stickman_Set/03_Interaction/interaction.js"></script>
-  <script src="Stickman_Set/04_Combat/combat.js"></script>
-  <script src="Stickman_Set/05_Emotion/emotion.js"></script>
-  <script src="Stickman_Set/06_Sport_Special/sport-special.js"></script>
+  <link rel="stylesheet" href="rig/rig.css" />
+  <link rel="stylesheet" href="web-assets/ui.css" />
+
+  <script src="rig/stickman.js"></script>
+  <script src="moves/_helpers.js"></script>
+  <script src="moves/walk.js"></script>
+  <script src="moves/run.js"></script>
+  <script src="moves/jump.js"></script>
+  <script src="moves/punch.js"></script>
+  <script src="moves/kick.js"></script>
+  <script src="moves/hit.js"></script>
+  <script src="moves/climb.js"></script>
+  <script src="moves/victory.js"></script>
 
   <style>
-    * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      width: 1080px;
-      height: 1920px;
-      overflow: hidden;
-      background: #0d1117;
-    }
-
-    #main {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #0d1117;
-    }
+    html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0d1117}
+    #main{position:relative;width:1080px;height:1920px;overflow:hidden;background:#0d1117}
   </style>
 </head>
 <body>
   <div
     id="main"
-    data-composition-id="stickman-vs-website"
+    data-composition-id="stickman-vs-web"
     data-start="0"
-    data-duration="12"
+    data-duration="36"
     data-width="1080"
     data-height="1920"
     data-fps="60"
     data-no-timeline
   >
     <div
-      id="scene-01-host"
       class="clip"
-      data-composition-id="scene-01"
-      data-composition-src="compositions/scene-01.html"
+      data-composition-id="scene-intro"
+      data-composition-src="scenes/01_intro.html"
       data-start="0"
-      data-duration="12"
+      data-duration="9"
+      data-track-index="0"
+      data-width="1080"
+      data-height="1920"
+      data-fps="60"
+    ></div>
+
+    <div
+      class="clip"
+      data-composition-id="scene-fight"
+      data-composition-src="scenes/02_fight.html"
+      data-start="9"
+      data-duration="10"
+      data-track-index="0"
+      data-width="1080"
+      data-height="1920"
+      data-fps="60"
+    ></div>
+
+    <div
+      class="clip"
+      data-composition-id="scene-boss"
+      data-composition-src="scenes/03_boss.html"
+      data-start="19"
+      data-duration="10"
+      data-track-index="0"
+      data-width="1080"
+      data-height="1920"
+      data-fps="60"
+    ></div>
+
+    <div
+      class="clip"
+      data-composition-id="scene-outro"
+      data-composition-src="scenes/04_outro.html"
+      data-start="29"
+      data-duration="7"
       data-track-index="0"
       data-width="1080"
       data-height="1920"
