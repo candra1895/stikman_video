@@ -1,0 +1,66 @@
+{
+  "version": "2.0.1",
+  "authored_fps": 60,
+  "classic_reference_fps": 24,
+  "rig": "point-based thick articulated SVG",
+  "categories": {
+    "00_Rig": [
+      "stand",
+      "pose interpolation",
+      "thick limbs",
+      "head",
+      "chest",
+      "pelvis",
+      "elbows",
+      "wrists",
+      "knees",
+      "ankles",
+      "feet"
+    ],
+    "01_Locomotion": [
+      "idle",
+      "walk",
+      "walkSlow",
+      "walkFast",
+      "walkBackward",
+      "run",
+      "sprint",
+      "stop"
+    ],
+    "02_Vertical": [
+      "crouch",
+      "standUp",
+      "jump",
+      "jumpHigh",
+      "fall",
+      "getUp"
+    ],
+    "03_Interaction": [
+      "point",
+      "think",
+      "push",
+      "pull",
+      "type"
+    ],
+    "04_Combat": [
+      "kickFront",
+      "jab",
+      "hitReact"
+    ],
+    "05_Emotion": [
+      "wave",
+      "nod",
+      "shakeHead",
+      "happy",
+      "sad",
+      "angry",
+      "clap"
+    ],
+    "06_Sport_Special": [
+      "squat",
+      "stretch",
+      "danceBounce",
+      "kickBall"
+    ]
+  }
+}
