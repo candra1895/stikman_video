@@ -1,0 +1,40 @@
+<template>
+  <div id="scene-fight" class="scene-shell" data-composition-id="scene-fight" data-duration="10" data-width="1080" data-height="1920" data-fps="60">
+    <div class="scene-title">STICKMAN VS WEB — POPUP FIGHT</div>
+    <div id="fight-browser" class="browser">
+      <div class="browser-bar"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><div class="browser-address">www.definitely-not-spam.com</div></div>
+      <div class="website">
+        <div class="web-navbar"><div class="web-logo">Click<span>Everything</span></div><div class="web-links"><span>Deals</span><span>Free Stuff</span><span>More Ads</span></div></div>
+        <div class="web-hero"><div class="web-pill">WELCOME!</div><h1>You have 99 notifications.</h1><p>And every single one of them wants your attention.</p></div>
+        <div class="playfield">
+          <div class="floor"></div>
+          <div id="fight-shadow" class="character-shadow" style="left:72px"></div>
+          <div id="fight-root" class="character-root" style="left:34px"><div id="fight-host" class="character-host"></div></div>
+          <div id="popup-a" class="popup" style="left:455px;bottom:185px"><strong>YOU WON!</strong><p>Click here immediately!!!</p></div>
+          <div id="popup-b" class="popup" style="right:45px;bottom:70px"><strong>UPDATE NOW</strong><p>Absolutely trustworthy popup.</p></div>
+          <div id="giant-cursor" class="cursor-giant" style="right:80px;top:62px">➤</div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">02 — POPUP FIGHT</div>
+  </div>
+  <script>
+    const fightStick = new StickmanRig.Stickman("#fight-host",{root:"#fight-root",shadow:"#fight-shadow"});
+    const fightTl = gsap.timeline({paused:true});
+    fightTl.set("#fight-root",{x:-80},0).set("#fight-shadow",{x:-80},0)
+      .fromTo("#popup-a",{scale:0,opacity:0},{scale:1,opacity:1,duration:.3,ease:"back.out(1.8)"},.6)
+      .fromTo("#popup-b",{scale:0,opacity:0},{scale:1,opacity:1,duration:.3,ease:"back.out(1.8)"},1.0)
+      .add(fightStick.run(2,{distance:260,cycleDuration:.56}),.7)
+      .add(fightStick.punch({target:"#popup-a"}),2.0)
+      .to("#popup-a",{x:360,rotation:55,opacity:0,duration:.5,ease:"power2.in"},2.35)
+      .fromTo("#giant-cursor",{x:180,y:-80,opacity:0,rotation:-25},{x:0,y:0,opacity:1,rotation:-12,duration:.45,ease:"power3.out"},3.0)
+      .add(fightStick.hit({knockback:35}),3.35)
+      .add(fightStick.jump({height:100,distance:145}),4.1)
+      .add(fightStick.run(1,{distance:120,cycleDuration:.52}),5.25)
+      .add(fightStick.punch({target:"#popup-b"}),6.0)
+      .to("#popup-b",{x:330,y:-120,rotation:-45,opacity:0,duration:.48,ease:"power2.in"},6.35)
+      .to("#giant-cursor",{x:260,y:160,rotation:35,opacity:0,duration:.55,ease:"power2.in"},7.0)
+      .add(fightStick.victory(),7.75);
+    window.__timelines["scene-fight"]=fightTl;
+  </script>
+</template>
